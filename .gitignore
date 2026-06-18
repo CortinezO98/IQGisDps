@@ -1,0 +1,131 @@
+# =========================
+# CREDENCIALES / SECRETOS
+# =========================
+.env
+.env.*
+!.env.example
+
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+*.csr
+*.cer
+*.der
+*.jks
+*.keystore
+*.ppk
+
+id_rsa
+id_rsa.pub
+id_dsa
+id_dsa.pub
+
+secrets.php
+credentials.php
+database.php
+db.php
+db.local.php
+config.local.php
+config.secret.php
+
+# Configs sensibles del proyecto
+app/config/db.php
+app/config/config.php
+app/config/config.php.bak*
+**/config.php.bak*
+**/*.bak
+**/*.backup
+**/*.old
+**/*.save
+
+# Google / Azure / OAuth
+*client_secret*
+*credentials*
+*oauth*
+*token*
+*refresh_token*
+*access_token*
+*azure*
+*service-account*
+*.json
+
+# =========================
+# BASES DE DATOS / DUMPS
+# =========================
+*.sql
+*.dump
+*.db
+*.sqlite
+*.sqlite3
+dump-*.sql
+backup-*.sql
+database-*.sql
+
+# =========================
+# STORAGE / ARCHIVOS SUBIDOS
+# =========================
+storage/
+uploads/
+upload/
+files/
+file/
+cloud/
+clouds/
+documents/
+documentos/
+adjuntos/
+attachments/
+media/
+public/uploads/
+public/storage/
+assets/uploads/
+app/storage/
+
+# =========================
+# DOCUMENTOS Y ARCHIVOS PESADOS
+# =========================
+*.xlsx
+*.xls
+*.xlsm
+*.csv
+*.pdf
+*.doc
+*.docx
+*.ppt
+*.pptx
+*.zip
+*.rar
+*.7z
+*.tar
+*.tar.gz
+*.gz
+
+# =========================
+# DEPENDENCIAS
+# =========================
+vendor/
+node_modules/
+bower_components/
+
+# =========================
+# CACHE / LOGS / TEMPORALES
+# =========================
+cache/
+tmp/
+temp/
+logs/
+log/
+*.log
+*.tmp
+*.cache
+
+# =========================
+# EDITORES / SISTEMA
+# =========================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
