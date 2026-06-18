@@ -1,0 +1,527 @@
+/* ============================================================
+   GAS v1.0 — Estilos del Módulo de Gestión de Asistencias
+   Archivo: assets/gas/css/gas.css
+   Complementa los estilos base del proyecto DPS.
+   ============================================================ */
+
+/* ── Variables de color del módulo ────────────────────────── */
+:root {
+    --gas-primary:    #1a3c6b;
+    --gas-secondary:  #2e75b6;
+    --gas-accent:     #e8f0f8;
+    --gas-success:    #198754;
+    --gas-warning:    #ffc107;
+    --gas-danger:     #dc3545;
+    --gas-purple:     #6f42c1;
+    --gas-card-shadow: 0 2px 12px rgba(0,0,0,.08);
+    --gas-radius:     10px;
+}
+
+/* ── Cards del módulo ─────────────────────────────────────── */
+.gas-card-modulo {
+    border: none;
+    border-radius: var(--gas-radius);
+    box-shadow: var(--gas-card-shadow);
+    transition: box-shadow .2s;
+}
+.gas-card-modulo:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,.13);
+}
+
+/* ── Header de sección ────────────────────────────────────── */
+.gas-section-header {
+    background: linear-gradient(135deg, var(--gas-primary), var(--gas-secondary));
+    color: white;
+    padding: 14px 20px;
+    border-radius: var(--gas-radius) var(--gas-radius) 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.gas-section-header h5,
+.gas-section-header h6 {
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: .3px;
+}
+
+/* ── Tarjetas de métricas (resumen global en reportes) ─────── */
+.gas-metric-card {
+    border: none;
+    border-radius: var(--gas-radius);
+    box-shadow: var(--gas-card-shadow);
+    text-align: center;
+    padding: 18px 10px;
+    transition: transform .15s;
+}
+.gas-metric-card:hover {
+    transform: translateY(-2px);
+}
+.gas-metric-card .gas-metric-num {
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+.gas-metric-card .gas-metric-label {
+    font-size: .78rem;
+    opacity: .85;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+}
+
+/* Variantes de color para las tarjetas de métricas */
+.gas-metric-card.total     { background: var(--gas-primary);   color: white; }
+.gas-metric-card.activa    { background: var(--gas-success);   color: white; }
+.gas-metric-card.finalizada{ background: var(--gas-warning);   color: #333;  }
+.gas-metric-card.cerrada   { background: #343a40;              color: white; }
+.gas-metric-card.anulada   { background: var(--gas-danger);    color: white; }
+.gas-metric-card.borrador  { background: #6c757d;              color: white; }
+
+/* ── Badges de estado ─────────────────────────────────────── */
+.gas-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .3px;
+}
+.gas-badge.borrador    { background: #e9ecef; color: #495057; }
+.gas-badge.activa      { background: #d1e7dd; color: #0f5132; }
+.gas-badge.finalizada  { background: #fff3cd; color: #664d03; }
+.gas-badge.cerrada     { background: #343a40; color: white;   }
+.gas-badge.anulada     { background: #f8d7da; color: #842029; }
+
+/* ── Tabla del módulo ─────────────────────────────────────── */
+.gas-table {
+    font-size: .875rem;
+}
+.gas-table thead th {
+    background: var(--gas-primary);
+    color: white;
+    font-weight: 600;
+    border: none;
+    white-space: nowrap;
+    padding: 10px 12px;
+}
+.gas-table tbody tr:hover {
+    background: var(--gas-accent);
+}
+.gas-table tbody td {
+    padding: 8px 12px;
+    vertical-align: middle;
+    border-color: #f0f0f0;
+}
+
+/* ── Panel de filtros ─────────────────────────────────────── */
+.gas-filters {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: var(--gas-radius);
+    padding: 14px 16px;
+    margin-bottom: 16px;
+}
+.gas-filters label {
+    font-size: .8rem;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 4px;
+}
+
+/* ── Botones de acción del módulo ─────────────────────────── */
+.gas-btn-accion {
+    border-radius: 6px;
+    font-size: .82rem;
+    padding: 5px 12px;
+    font-weight: 500;
+    transition: all .15s;
+}
+.gas-btn-accion:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0,0,0,.15);
+}
+
+/* ── Estado vacío (empty state) ────────────────────────────── */
+.gas-empty-state {
+    text-align: center;
+    padding: 48px 20px;
+    color: #adb5bd;
+}
+.gas-empty-state i,
+.gas-empty-state .gas-empty-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 12px;
+    opacity: .5;
+}
+.gas-empty-state p {
+    font-size: .95rem;
+    margin: 0;
+}
+
+/* ── Barra de progreso de participación ─────────────────────  */
+.gas-progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 100px;
+}
+.gas-progress-wrap .progress {
+    flex: 1;
+    height: 7px;
+    border-radius: 4px;
+    background: #e9ecef;
+}
+.gas-progress-wrap small {
+    font-size: .78rem;
+    font-weight: 600;
+    min-width: 32px;
+    text-align: right;
+}
+
+/* ── Promedio con color semáforo ──────────────────────────── */
+.gas-prom-alto   { color: #198754; font-weight: 700; }
+.gas-prom-medio  { color: #fd7e14; font-weight: 700; }
+.gas-prom-bajo   { color: #dc3545; font-weight: 700; }
+
+/* ── Info del detalle de sesión ───────────────────────────── */
+.gas-detail-dl dt {
+    font-size: .82rem;
+    color: #6c757d;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+}
+.gas-detail-dl dd {
+    font-size: .95rem;
+    color: #212529;
+    margin-bottom: 10px;
+}
+
+/* ── Link público (input de solo lectura) ─────────────────── */
+.gas-link-box {
+    background: #f8f9fa;
+    border: 1px dashed #2e75b6;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'Courier New', monospace;
+    font-size: .82rem;
+    color: var(--gas-secondary);
+    word-break: break-all;
+    cursor: pointer;
+    transition: background .15s;
+}
+.gas-link-box:hover {
+    background: var(--gas-accent);
+}
+
+/* ── QR container ─────────────────────────────────────────── */
+.gas-qr-container {
+    text-align: center;
+    padding: 16px;
+}
+.gas-qr-container img {
+    max-width: 180px;
+    border: 4px solid white;
+    box-shadow: 0 2px 10px rgba(0,0,0,.12);
+    border-radius: 8px;
+}
+.gas-qr-placeholder {
+    width: 150px;
+    height: 150px;
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    color: #adb5bd;
+    font-size: .8rem;
+}
+.gas-qr-placeholder span {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 6px;
+    opacity: .4;
+}
+
+/* ── Acciones de cambio de estado ─────────────────────────── */
+.gas-acciones-estado {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+/* ── Formularios públicos (gas_publico) ───────────────────── */
+.gas-pub-card {
+    max-width: 680px;
+    margin: 40px auto;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(0,0,0,.13);
+}
+
+.gas-pub-header {
+    background: linear-gradient(135deg, var(--gas-primary), var(--gas-secondary));
+    color: white;
+    padding: 28px 32px;
+}
+.gas-pub-header.encuesta {
+    background: linear-gradient(135deg, var(--gas-purple), var(--gas-secondary));
+}
+.gas-pub-header.exito-asistencia {
+    background: linear-gradient(135deg, #155724, var(--gas-success));
+}
+.gas-pub-header.exito-encuesta {
+    background: linear-gradient(135deg, var(--gas-purple), #0d6efd);
+}
+
+.gas-pub-header h5 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+.gas-pub-header .gas-pub-meta {
+    font-size: .88rem;
+    opacity: .85;
+}
+.gas-pub-tag {
+    display: inline-block;
+    background: rgba(255,255,255,.2);
+    border-radius: 20px;
+    padding: 3px 14px;
+    font-size: .78rem;
+    margin-bottom: 10px;
+    letter-spacing: .3px;
+}
+
+.gas-pub-body {
+    background: white;
+    padding: 28px 32px;
+}
+.gas-pub-footer {
+    background: #f8f9fa;
+    padding: 12px 32px;
+    font-size: .78rem;
+    color: #888;
+    text-align: center;
+    border-top: 1px solid #f0f0f0;
+}
+
+/* ── Calificación visual (encuesta) ───────────────────────── */
+.gas-rating-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.gas-rating-group input[type="radio"] {
+    display: none;
+}
+.gas-rating-group label {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    cursor: pointer;
+    border: 2px solid #dee2e6;
+    background: white;
+    transition: all .18s;
+    font-size: 1rem;
+    user-select: none;
+}
+.gas-rating-group input[type="radio"]:checked + label {
+    background: var(--gas-secondary);
+    color: white;
+    border-color: var(--gas-secondary);
+    box-shadow: 0 2px 8px rgba(46,117,182,.4);
+    transform: scale(1.1);
+}
+.gas-rating-group label:hover {
+    background: var(--gas-accent);
+    border-color: var(--gas-secondary);
+}
+.gas-rating-label {
+    font-size: .8rem;
+    color: var(--gas-secondary);
+    font-weight: 600;
+    margin-left: 6px;
+    min-width: 80px;
+}
+
+/* ── Tarjeta de pregunta (encuesta) ───────────────────────── */
+.gas-pregunta-card {
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    background: #fafbfc;
+    transition: border-color .15s;
+}
+.gas-pregunta-card:focus-within {
+    border-color: var(--gas-secondary);
+    background: #f0f6ff;
+}
+.gas-pregunta-num {
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--gas-purple);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-bottom: 6px;
+}
+.gas-pregunta-texto {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 12px;
+    font-size: .95rem;
+}
+
+/* ── Bloque de verificación de identidad (encuesta) ─────────  */
+.gas-identidad-box {
+    background: #f0f6ff;
+    border: 1px solid #bfd3f0;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 20px;
+}
+.gas-identidad-box h6 {
+    color: var(--gas-primary);
+    font-weight: 700;
+    margin-bottom: 12px;
+    font-size: .9rem;
+}
+
+/* ── Estrellas en pantalla de confirmación ───────────────── */
+.gas-stars {
+    font-size: 2rem;
+    letter-spacing: 4px;
+    margin: 8px 0;
+}
+.gas-star-on  { color: #ffc107; }
+.gas-star-off { color: #dee2e6; }
+
+/* ── Promedio grande en confirmación ─────────────────────── */
+.gas-promedio-grande {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--gas-secondary);
+    line-height: 1;
+}
+.gas-promedio-grande sup {
+    font-size: 1.1rem;
+    color: #888;
+}
+
+/* ── Contador de caracteres en textarea ──────────────────── */
+.gas-char-counter {
+    font-size: .75rem;
+    text-align: right;
+    color: #adb5bd;
+    margin-top: 3px;
+}
+.gas-char-counter.near-limit {
+    color: var(--gas-warning);
+    font-weight: 600;
+}
+
+/* ── Alertas en formularios públicos ─────────────────────── */
+.gas-alert {
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: .88rem;
+}
+.gas-alert ul {
+    margin: 6px 0 0;
+    padding-left: 18px;
+}
+.gas-alert.error  { background: #f8d7da; border-left: 4px solid var(--gas-danger);  color: #842029; }
+.gas-alert.info   { background: #cfe2ff; border-left: 4px solid var(--gas-secondary); color: #084298; }
+.gas-alert.ok     { background: #d1e7dd; border-left: 4px solid var(--gas-success); color: #0f5132; }
+
+/* ── Página de error pública ──────────────────────────────── */
+.gas-error-card {
+    max-width: 520px;
+    margin: auto;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(0,0,0,.13);
+}
+.gas-error-header {
+    padding: 40px 32px;
+    text-align: center;
+    color: white;
+}
+.gas-error-icon {
+    font-size: 3.5rem;
+    margin-bottom: 12px;
+    display: block;
+}
+.gas-error-body {
+    background: white;
+    padding: 28px 32px;
+    text-align: center;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 576px) {
+    .gas-pub-body {
+        padding: 20px 16px;
+    }
+    .gas-pub-header {
+        padding: 20px 16px;
+    }
+    .gas-pub-card {
+        margin: 16px auto;
+        border-radius: 10px;
+    }
+    .gas-rating-group label {
+        width: 40px;
+        height: 40px;
+        font-size: .9rem;
+    }
+    .gas-metric-card .gas-metric-num {
+        font-size: 1.8rem;
+    }
+    .gas-table {
+        font-size: .78rem;
+    }
+}
+
+/* ── Animación de entrada suave ───────────────────────────── */
+@keyframes gasFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.gas-pub-card,
+.gas-error-card {
+    animation: gasFadeIn .35s ease-out;
+}
+
+/* ── Spinner de carga al enviar formulario ────────────────── */
+.gas-btn-submit.loading {
+    pointer-events: none;
+    opacity: .75;
+}
+.gas-btn-submit.loading::after {
+    content: '';
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255,255,255,.4);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: gas-spin .6s linear infinite;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+@keyframes gas-spin {
+    to { transform: rotate(360deg); }
+}

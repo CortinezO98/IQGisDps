@@ -1,0 +1,3 @@
+# Seguridad: no ejecutar PHP en el directorio de QRs
+php_flag engine off
+Options -Indexes
