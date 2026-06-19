@@ -6,6 +6,7 @@
         <span class="menu-title">Dashboard</span>
       </a>
     </li>
+
     <?php if (isset($_SESSION[APP_SESSION.'_session_modulos']['Interacciones']) AND $_SESSION[APP_SESSION.'_session_modulos']['Interacciones']!=""): ?>
       <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#gestion-interacciones" aria-expanded="false" aria-controls="gestion-interacciones">
@@ -15,9 +16,17 @@
         </a>
         <div class="collapse" id="gestion-interacciones">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="<?php echo URL_MENU; ?>/interacciones/interacciones?pagina=1&id=null&bandeja=<?php echo base64_encode('Hoy'); ?>">Registro Interacciones</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="<?php echo URL_MENU; ?>/interacciones/interacciones?pagina=1&id=null&bandeja=<?php echo base64_encode('Hoy'); ?>">
+                Registro Interacciones
+              </a>
+            </li>
             <?php if (isset($_SESSION[APP_SESSION.'_session_modulos']['Interacciones-Configuración']) AND $_SESSION[APP_SESSION.'_session_modulos']['Interacciones-Configuración']!=""): ?>
-              <li class="nav-item"> <a class="nav-link" href="<?php echo URL_MENU; ?>/interacciones/configuracion?pagina=1&id=null">Configuración</a></li>
+              <li class="nav-item">
+                <a class="nav-link" href="<?php echo URL_MENU; ?>/interacciones/configuracion?pagina=1&id=null">
+                  Configuración
+                </a>
+              </li>
             <?php endif; ?>
           </ul>
         </div>
@@ -34,16 +43,32 @@
         <div class="collapse" id="gestion-ocr">
           <ul class="nav flex-column sub-menu">
             <?php if (isset($_SESSION[APP_SESSION.'_session_modulos']['Gestión OCR-Gestión']) AND $_SESSION[APP_SESSION.'_session_modulos']['Gestión OCR-Gestión']!=""): ?>
-              <li class="nav-item"><a class="nav-link" href="<?php echo URL_MENU; ?>/gestion_ocr/familias_accion?pagina=1&id=null&bandeja=<?php echo base64_encode('Pendientes'); ?>&estado=null">FA-Gestión</a></li>
+              <li class="nav-item">
+                <a class="nav-link" href="<?php echo URL_MENU; ?>/gestion_ocr/familias_accion?pagina=1&id=null&bandeja=<?php echo base64_encode('Pendientes'); ?>&estado=null">
+                  FA-Gestión
+                </a>
+              </li>
             <?php endif; ?>
             <?php if (isset($_SESSION[APP_SESSION.'_session_modulos']['Gestión OCR-Consultas']) AND $_SESSION[APP_SESSION.'_session_modulos']['Gestión OCR-Consultas']!=""): ?>
-              <li class="nav-item"><a class="nav-link" href="<?php echo URL_MENU; ?>/gestion_ocr/familias_accion_consultas">FA-Consultas</a></li>
+              <li class="nav-item">
+                <a class="nav-link" href="<?php echo URL_MENU; ?>/gestion_ocr/familias_accion_consultas">
+                  FA-Consultas
+                </a>
+              </li>
             <?php endif; ?>
             <?php if (isset($_SESSION[APP_SESSION.'_session_modulos']['Gestión OCR-Consultas Enlace']) AND $_SESSION[APP_SESSION.'_session_modulos']['Gestión OCR-Consultas Enlace']!=""): ?>
-              <li class="nav-item"><a class="nav-link" href="<?php echo URL_MENU; ?>/gestion_ocr/familias_accion_consultas_enlace?pagina=1&id=null&bandeja=<?php echo base64_encode('Pendientes'); ?>&estado=null">FA-Consultas Enlace</a></li>
+              <li class="nav-item">
+                <a class="nav-link" href="<?php echo URL_MENU; ?>/gestion_ocr/familias_accion_consultas_enlace?pagina=1&id=null&bandeja=<?php echo base64_encode('Pendientes'); ?>&estado=null">
+                  FA-Consultas Enlace
+                </a>
+              </li>
             <?php endif; ?>
             <?php if (isset($_SESSION[APP_SESSION.'_session_modulos']['Gestión OCR-Usuarios']) AND $_SESSION[APP_SESSION.'_session_modulos']['Gestión OCR-Usuarios']!=""): ?>
-              <li class="nav-item"><a class="nav-link" href="<?php echo URL_MENU; ?>/gestion_ocr/familias_accion_usuarios?pagina=1&id=null">FA-Usuarios</a></li>
+              <li class="nav-item">
+                <a class="nav-link" href="<?php echo URL_MENU; ?>/gestion_ocr/familias_accion_usuarios?pagina=1&id=null">
+                  FA-Usuarios
+                </a>
+              </li>
             <?php endif; ?>
           </ul>
         </div>
@@ -59,14 +84,26 @@
         </a>
         <div class="collapse" id="calidad">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="<?php echo URL_MENU; ?>/calidad/monitoreos?pagina=1&id=null&bandeja=<?php echo base64_encode('Mes Actual'); ?>">Monitoreos</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="<?php echo URL_MENU; ?>/calidad/monitoreos?pagina=1&id=null&bandeja=<?php echo base64_encode('Mes Actual'); ?>">
+                Monitoreos
+              </a>
+            </li>
 
             <?php if (isset($_SESSION[APP_SESSION.'_session_modulos']['Calidad-Matriz Calidad']) AND $_SESSION[APP_SESSION.'_session_modulos']['Calidad-Matriz Calidad']!=""): ?>
-              <li class="nav-item"> <a class="nav-link" href="<?php echo URL_MENU; ?>/calidad/matriz?pagina=1&id=null">Matriz de Calidad</a></li>
+              <li class="nav-item">
+                <a class="nav-link" href="<?php echo URL_MENU; ?>/calidad/matriz?pagina=1&id=null">
+                  Matriz de Calidad
+                </a>
+              </li>
             <?php endif; ?>
 
             <?php if (isset($_SESSION[APP_SESSION.'_session_modulos']['Calidad-Calculadora Muestral']) AND $_SESSION[APP_SESSION.'_session_modulos']['Calidad-Calculadora Muestral']!=""): ?>
-              <li class="nav-item"> <a class="nav-link" href="<?php echo URL_MENU; ?>/calidad/cmuestral?pagina=1&id=null">Calculadora Muestral</a></li>
+              <li class="nav-item">
+                <a class="nav-link" href="<?php echo URL_MENU; ?>/calidad/cmuestral?pagina=1&id=null">
+                  Calculadora Muestral
+                </a>
+              </li>
             <?php endif; ?>
           </ul>
         </div>
@@ -82,7 +119,11 @@
         </a>
         <div class="collapse" id="gestion-turno">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="<?php echo URL_MENU; ?>/turnos/turno_realizado?fechainicio=<?php echo base64_encode(date('Y-m-d'));?>&operacion=<?php echo base64_encode('Todos'); ?>&id=null">Turno Realizado</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="<?php echo URL_MENU; ?>/turnos/turno_realizado?fechainicio=<?php echo base64_encode(date('Y-m-d'));?>&operacion=<?php echo base64_encode('Todos'); ?>&id=null">
+                Turno Realizado
+              </a>
+            </li>
           </ul>
         </div>
       </li>
@@ -97,7 +138,11 @@
         </a>
         <div class="collapse" id="gestion-conocimiento">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="<?php echo URL_MENU; ?>/gestion_conocimiento/conocimiento">Gestión Conocimiento</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="<?php echo URL_MENU; ?>/gestion_conocimiento/conocimiento">
+                Gestión Conocimiento
+              </a>
+            </li>
           </ul>
         </div>
       </li>
@@ -112,7 +157,11 @@
         </a>
         <div class="collapse" id="traslado_iva">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="<?php echo URL_MENU; ?>/traslado_iva/casos?pagina=1&id=null&bandeja=<?php echo base64_encode('Pendientes'); ?>">Casos</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="<?php echo URL_MENU; ?>/traslado_iva/casos?pagina=1&id=null&bandeja=<?php echo base64_encode('Pendientes'); ?>">
+                Casos
+              </a>
+            </li>
           </ul>
         </div>
       </li>
@@ -128,23 +177,56 @@
         <div class="collapse" id="gestion-canal-escrito">
           <ul class="nav flex-column sub-menu">
             <?php if (isset($_SESSION[APP_SESSION.'_session_modulos']['Canal Escrito-Reparto']) AND $_SESSION[APP_SESSION.'_session_modulos']['Canal Escrito-Reparto']!=""): ?>
-              <li class="nav-item"> <a class="nav-link" href="<?php echo URL_MENU; ?>/canal_escrito_reparto/reparto?pagina=1&id=null&bandeja=<?php echo base64_encode('Hoy'); ?>">Reparto</a></li>
+              <li class="nav-item">
+                <a class="nav-link" href="<?php echo URL_MENU; ?>/canal_escrito_reparto/reparto?pagina=1&id=null&bandeja=<?php echo base64_encode('Hoy'); ?>">
+                  Reparto
+                </a>
+              </li>
             <?php endif; ?>
+
             <?php if (isset($_SESSION[APP_SESSION.'_session_modulos']['Canal Escrito-Jóvenes Acción-Focalización']) AND $_SESSION[APP_SESSION.'_session_modulos']['Canal Escrito-Jóvenes Acción-Focalización']!=""): ?>
-              <li class="nav-item"> <a class="nav-link" href="<?php echo URL_MENU; ?>/canal_escrito_jafocalizacion/jafocalizacion?pagina=1&id=null&bandeja=<?php echo base64_encode('Hoy'); ?>">Jóvenes en Acción<br>y Focalización</a></li>
+              <li class="nav-item">
+                <a class="nav-link" href="<?php echo URL_MENU; ?>/canal_escrito_jafocalizacion/jafocalizacion?pagina=1&id=null&bandeja=<?php echo base64_encode('Hoy'); ?>">
+                  Jóvenes en Acción<br>y Focalización
+                </a>
+              </li>
             <?php endif; ?>
+
             <?php if (isset($_SESSION[APP_SESSION.'_session_modulos']['Canal Escrito-TMNC']) AND $_SESSION[APP_SESSION.'_session_modulos']['Canal Escrito-TMNC']!=""): ?>
-              <li class="nav-item"> <a class="nav-link" href="<?php echo URL_MENU; ?>/canal_escrito_tmnc/tmnc?pagina=1&id=null&bandeja=<?php echo base64_encode('Hoy'); ?>">Transferencias Monetarias<br>No Condicionadas</a></li>
+              <li class="nav-item">
+                <a class="nav-link" href="<?php echo URL_MENU; ?>/canal_escrito_tmnc/tmnc?pagina=1&id=null&bandeja=<?php echo base64_encode('Hoy'); ?>">
+                  Transferencias Monetarias<br>No Condicionadas
+                </a>
+              </li>
             <?php endif; ?>
+
             <?php if (isset($_SESSION[APP_SESSION.'_session_modulos']['Canal Escrito-Dashboard']) AND $_SESSION[APP_SESSION.'_session_modulos']['Canal Escrito-Dashboard']!=""): ?>
-              <li class="nav-item"> <a class="nav-link" href="<?php echo URL_MENU; ?>/canal_escrito/reparto_estadisticas">Estadísticas</a></li>
+              <li class="nav-item">
+                <a class="nav-link" href="<?php echo URL_MENU; ?>/canal_escrito/reparto_estadisticas">
+                  Estadísticas
+                </a>
+              </li>
             <?php endif; ?>
+
             <?php if (isset($_SESSION[APP_SESSION.'_session_modulos']['Canal Escrito-Productividad']) AND $_SESSION[APP_SESSION.'_session_modulos']['Canal Escrito-Productividad']!=""): ?>
-              <li class="nav-item"> <a class="nav-link" href="<?php echo URL_MENU; ?>/canal_escrito_productividad/reparto_estadisticas">Productividad</a></li>
+              <li class="nav-item">
+                <a class="nav-link" href="<?php echo URL_MENU; ?>/canal_escrito_productividad/reparto_estadisticas">
+                  Productividad
+                </a>
+              </li>
             <?php endif; ?>
+
             <?php if (isset($_SESSION[APP_SESSION.'_session_modulos']['Canal Escrito-Configuración']) AND $_SESSION[APP_SESSION.'_session_modulos']['Canal Escrito-Configuración']!=""): ?>
-              <li class="nav-item"> <a class="nav-link" href="<?php echo URL_MENU; ?>/canal_escrito/configuracion?pagina=1&id=null">Configuración</a></li>
-              <li class="nav-item"> <a class="nav-link" href="<?php echo URL_MENU; ?>/canal_escrito_productividad/configuracion?pagina=1&id=null">Configuración Productividad</a></li>
+              <li class="nav-item">
+                <a class="nav-link" href="<?php echo URL_MENU; ?>/canal_escrito/configuracion?pagina=1&id=null">
+                  Configuración
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="<?php echo URL_MENU; ?>/canal_escrito_productividad/configuracion?pagina=1&id=null">
+                  Configuración Productividad
+                </a>
+              </li>
             <?php endif; ?>
           </ul>
         </div>
@@ -161,10 +243,19 @@
         <div class="collapse" id="gestion-radicacion">
           <ul class="nav flex-column sub-menu">
             <?php if (isset($_SESSION[APP_SESSION.'_session_modulos']['Radicación']) AND $_SESSION[APP_SESSION.'_session_modulos']['Radicación']!=""): ?>
-              <li class="nav-item"><a class="nav-link" href="<?php echo URL_MENU; ?>/radicados/buzon?pagina=1&id=null&bandeja=<?php echo base64_encode('Prioritarios'); ?>&estado=<?php echo base64_encode('Pendientes'); ?>">Buzón</a></li>
+              <li class="nav-item">
+                <a class="nav-link" href="<?php echo URL_MENU; ?>/radicados/buzon?pagina=1&id=null&bandeja=<?php echo base64_encode('Prioritarios'); ?>&estado=<?php echo base64_encode('Pendientes'); ?>">
+                  Buzón
+                </a>
+              </li>
             <?php endif; ?>
+
             <?php if (isset($_SESSION[APP_SESSION.'_session_modulos']['Radicación-Configuración']) AND $_SESSION[APP_SESSION.'_session_modulos']['Radicación-Configuración']!=""): ?>
-              <li class="nav-item"><a class="nav-link" href="<?php echo URL_MENU; ?>/radicados/buzon_plantillas?pagina=1&id=null">Plantillas</a></li>
+              <li class="nav-item">
+                <a class="nav-link" href="<?php echo URL_MENU; ?>/radicados/buzon_plantillas?pagina=1&id=null">
+                  Plantillas
+                </a>
+              </li>
             <?php endif; ?>
           </ul>
         </div>
@@ -181,11 +272,64 @@
         <div class="collapse" id="envios-web">
           <ul class="nav flex-column sub-menu">
             <?php if (isset($_SESSION[APP_SESSION.'_session_modulos']['Envíos WEB']) AND $_SESSION[APP_SESSION.'_session_modulos']['Envíos WEB']!=""): ?>
-              <li class="nav-item"><a class="nav-link" href="<?php echo URL_MENU; ?>/envios_web/correo?pagina=1&id=null&bandeja=<?php echo base64_encode('Todos'); ?>&estado=<?php echo base64_encode('Pendientes'); ?>">Correo</a></li>
+              <li class="nav-item">
+                <a class="nav-link" href="<?php echo URL_MENU; ?>/envios_web/correo?pagina=1&id=null&bandeja=<?php echo base64_encode('Todos'); ?>&estado=<?php echo base64_encode('Pendientes'); ?>">
+                  Correo
+                </a>
+              </li>
             <?php endif; ?>
+
             <?php if (isset($_SESSION[APP_SESSION.'_session_modulos']['Envíos WEB-Configuración']) AND $_SESSION[APP_SESSION.'_session_modulos']['Envíos WEB-Configuración']!=""): ?>
-              <li class="nav-item"><a class="nav-link" href="<?php echo URL_MENU; ?>/envios_web/plantillas?pagina=1&id=null">Plantillas</a></li>
+              <li class="nav-item">
+                <a class="nav-link" href="<?php echo URL_MENU; ?>/envios_web/plantillas?pagina=1&id=null">
+                  Plantillas
+                </a>
+              </li>
             <?php endif; ?>
+          </ul>
+        </div>
+      </li>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION[APP_SESSION.'_session_modulos']['Gestión Asistencias']) AND $_SESSION[APP_SESSION.'_session_modulos']['Gestión Asistencias']!=""): ?>
+      <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="collapse" href="#gestion-asistencias" aria-expanded="false" aria-controls="gestion-asistencias">
+          <i class="menu-icon fas fa-clipboard-check"></i>
+          <span class="menu-title">Gestión Asistencias</span>
+          <i class="menu-arrow fas fa-angle-right"></i> 
+        </a>
+
+        <div class="collapse" id="gestion-asistencias">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item">
+              <a class="nav-link" href="<?php echo URL_MENU; ?>/gestion_asistencias/index">
+                Sesiones
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="<?php echo URL_MENU; ?>/gestion_asistencias/sesion_crear">
+                Crear sesión
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="<?php echo URL_MENU; ?>/gestion_asistencias/reportes">
+                Reportes
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="<?php echo URL_MENU; ?>/gestion_asistencias/asistentes_lista">
+                Asistentes
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="<?php echo URL_MENU; ?>/gestion_asistencias/encuestas_lista">
+                Encuestas
+              </a>
+            </li>
           </ul>
         </div>
       </li>
@@ -201,12 +345,36 @@
         </a>
         <div class="collapse" id="administrador">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a href="<?php echo URL_MENU; ?>/administrador/usuarios?pagina=1&id=null" class="nav-link" href="">Usuarios</a></li>
-            <li class="nav-item"> <a href="<?php echo URL_MENU; ?>/administrador/areas?pagina=1&id=null" class="nav-link" href="">Áreas</a></li>
-            <li class="nav-item"> <a href="<?php echo URL_MENU; ?>/administrador/ubicaciones?pagina=1&id=null" class="nav-link" href="">Ubicaciones</a></li>
-            <li class="nav-item"> <a href="<?php echo URL_MENU; ?>/administrador/buzones?pagina=1&id=null" class="nav-link" href="">Buzones Correo</a></li>
-            <li class="nav-item"> <a href="<?php echo URL_MENU; ?>/administrador/notificaciones_correo?pagina=1&id=null" class="nav-link" href="">Notificaciones Correo</a></li>
-            <li class="nav-item"> <a href="<?php echo URL_MENU; ?>/administrador/logs?pagina=1&id=null" class="nav-link" href="">Logs</a></li>
+            <li class="nav-item">
+              <a href="<?php echo URL_MENU; ?>/administrador/usuarios?pagina=1&id=null" class="nav-link">
+                Usuarios
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?php echo URL_MENU; ?>/administrador/areas?pagina=1&id=null" class="nav-link">
+                Áreas
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?php echo URL_MENU; ?>/administrador/ubicaciones?pagina=1&id=null" class="nav-link">
+                Ubicaciones
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?php echo URL_MENU; ?>/administrador/buzones?pagina=1&id=null" class="nav-link">
+                Buzones Correo
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?php echo URL_MENU; ?>/administrador/notificaciones_correo?pagina=1&id=null" class="nav-link">
+                Notificaciones Correo
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?php echo URL_MENU; ?>/administrador/logs?pagina=1&id=null" class="nav-link">
+                Logs
+              </a>
+            </li>
           </ul>
         </div>
       </li>
