@@ -178,19 +178,19 @@ $tipos_sesion = gas_tipos_sesion();
                 <table class="table table-hover table-bordered table-striped font-size-11 mb-0">
                   <thead>
                     <tr>
-                      <th class="px-1 py-2">Código</th>
-                      <th class="px-1 py-2">Sesión</th>
-                      <th class="px-1 py-2">Facilitador</th>
-                      <th class="px-1 py-2">Fecha</th>
-                      <th class="px-1 py-2 text-center">Estado</th>
-                      <th class="px-1 py-2 text-center">Asist.</th>
-                      <th class="px-1 py-2 text-center">Encuestas</th>
-                      <th class="px-1 py-2 text-center">% Resp.</th>
-                      <th class="px-1 py-2 text-center">P. Gral.</th>
-                      <th class="px-1 py-2 text-center">Facilit.</th>
-                      <th class="px-1 py-2 text-center">Metod.</th>
-                      <th class="px-1 py-2 text-center">Mat.</th>
-                      <th class="px-1 py-2 text-center">Export.</th>
+                      <th class="px-1 py-2 text-white">Código</th>
+                      <th class="px-1 py-2 text-white">Sesión</th>
+                      <th class="px-1 py-2 text-white">Facilitador</th>
+                      <th class="px-1 py-2 text-white">Fecha</th>
+                      <th class="px-1 py-2 text-center text-white">Estado</th>
+                      <th class="px-1 py-2 text-center text-white">Asist.</th>
+                      <th class="px-1 py-2 text-center text-white">Encuestas</th>
+                      <th class="px-1 py-2 text-center text-white">% Resp.</th>
+                      <th class="px-1 py-2 text-center text-white">P. Gral.</th>
+                      <th class="px-1 py-2 text-center text-white">Facilit.</th>
+                      <th class="px-1 py-2 text-center text-white">Metod.</th>
+                      <th class="px-1 py-2 text-center text-white">Mat.</th>
+                      <th class="px-1 py-2 text-center text-white">Export.</th>
                     </tr>
                   </thead>
                   <tbody>

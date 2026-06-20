@@ -1,43 +1,31 @@
 <?php
 /**
- * templates/gas_publico/asistencia_procesar.php
- * Procesador POST del formulario de asistencia pública.
- * CORRECCIÓN: usa iniciador.php para obtener $enlace_db en lugar de gas_conectar_bd()
+ * templates/gas_publico/asistencia_procesar.php — CORREGIDO
+ * Usa iniciador.php → $enlace_db con credenciales correctas de DPS.
  */
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+if (session_status() === PHP_SESSION_NONE) session_start();
 
-// Usar iniciador.php de DPS → obtiene $enlace_db con credenciales correctas
 require_once __DIR__ . '/../../iniciador.php';
 require_once __DIR__ . '/../gestion_asistencias/includes/gas_funciones.php';
 
-// Solo POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: index.php');
-    exit;
+    header('Location: index.php'); exit;
 }
 
 // Honeypot anti-bot
 if (!empty($_POST['website'])) {
-    include __DIR__ . '/asistencia_confirmacion.php';
-    exit;
+    include __DIR__ . '/asistencia_confirmacion.php'; exit;
 }
 
-// ── Validar token ─────────────────────────────────────────────────────────
 $token = gas_sanitizar($_POST['token'] ?? '');
 if (!preg_match('/^[a-f0-9]{64}$/', $token)) {
-    $error_tipo = 'token_invalido';
-    include __DIR__ . '/error.php';
-    exit;
+    $error_tipo = 'token_invalido'; include __DIR__ . '/error.php'; exit;
 }
 
-// ── Revalidar que la sesión sigue activa ──────────────────────────────────
 $stmt = $enlace_db->prepare(
     "SELECT gas_id FROM gestion_asistencias_sesiones
-     WHERE gas_token_publico = ? AND gas_estado = 'activa'
-     LIMIT 1"
+     WHERE gas_token_publico = ? AND gas_estado = 'activa' LIMIT 1"
 );
 $stmt->bind_param('s', $token);
 $stmt->execute();
@@ -45,13 +33,10 @@ $sesion = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
 if (!$sesion) {
-    $error_tipo = 'sesion_no_disponible';
-    include __DIR__ . '/error.php';
-    exit;
+    $error_tipo = 'sesion_no_disponible'; include __DIR__ . '/error.php'; exit;
 }
 $sesion_id = (int)$sesion['gas_id'];
 
-// ── Sanitizar campos ──────────────────────────────────────────────────────
 $tipo_doc  = gas_sanitizar($_POST['tipo_documento']   ?? '', 30);
 $num_doc   = gas_sanitizar($_POST['numero_documento'] ?? '', 20);
 $nombres   = gas_sanitizar($_POST['nombres']          ?? '', 150);
@@ -61,9 +46,8 @@ $celular   = gas_sanitizar($_POST['celular']          ?? '', 20);
 $entidad   = gas_sanitizar($_POST['entidad']          ?? '', 200);
 $cargo     = gas_sanitizar($_POST['cargo']            ?? '', 100);
 
-// ── Validaciones ──────────────────────────────────────────────────────────
-$errores = [];
-$tipos_validos = ['CC', 'CE', 'TI', 'PP', 'NIT', 'OTRO'];
+$errores       = [];
+$tipos_validos = ['CC','CE','TI','PP','NIT','OTRO'];
 
 if (empty($tipo_doc) || !in_array($tipo_doc, $tipos_validos, true))
     $errores[] = 'Selecciona un tipo de documento válido.';
@@ -78,11 +62,9 @@ if (empty($correo) || !filter_var($correo, FILTER_VALIDATE_EMAIL))
 
 if (!empty($errores)) {
     $_SESSION['gas_form_errores'] = $errores;
-    header('Location: index.php?t=' . urlencode($token));
-    exit;
+    header('Location: index.php?t=' . urlencode($token)); exit;
 }
 
-// ── Insertar asistencia ───────────────────────────────────────────────────
 $ip    = gas_obtener_ip();
 $ua    = mb_substr($_SERVER['HTTP_USER_AGENT'] ?? '', 0, 500);
 $ahora = date('Y-m-d H:i:s');
@@ -95,9 +77,9 @@ $stmt = $enlace_db->prepare(
       gar_ip, gar_user_agent, gar_registro_fecha)
      VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)'
 );
-// 13 parámetros: 1 int + 12 strings
+// 13 parámetros: i + 12 strings
 $stmt->bind_param(
-    'issssssssssss',  // 13 params: 1 int (sesion_id) + 12 strings
+    'issssssssssss',
     $sesion_id, $tipo_doc, $num_doc,
     $nombres, $apellidos, $correo, $celular,
     $entidad, $cargo, $ahora,
@@ -110,13 +92,10 @@ if ($stmt->execute()) {
     $_SESSION['gas_gar_id']  = $gar_id;
     $_SESSION['gas_token']   = $token;
     $_SESSION['gas_nombres'] = $nombres . ' ' . $apellidos;
-    include __DIR__ . '/asistencia_confirmacion.php';
-    exit;
-
+    include __DIR__ . '/asistencia_confirmacion.php'; exit;
 } else {
     $err_num = $enlace_db->errno;
     $stmt->close();
     $error_tipo = ($err_num === 1062) ? 'asistencia_duplicada' : 'error_generico';
-    include __DIR__ . '/error.php';
-    exit;
+    include __DIR__ . '/error.php'; exit;
 }

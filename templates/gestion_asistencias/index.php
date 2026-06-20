@@ -224,15 +224,15 @@ $tipos_sesion = gas_tipos_sesion();
                 <table class="table table-hover table-bordered table-striped font-size-11 mb-0">
                   <thead>
                     <tr>
-                      <th class="px-1 py-2">Código</th>
-                      <th class="px-1 py-2">Nombre</th>
-                      <th class="px-1 py-2">Tipo</th>
-                      <th class="px-1 py-2">Facilitador</th>
-                      <th class="px-1 py-2">Fecha Inicio</th>
-                      <th class="px-1 py-2 text-center">Estado</th>
-                      <th class="px-1 py-2 text-center">Asist.</th>
-                      <th class="px-1 py-2 text-center">Encuestas</th>
-                      <th class="px-1 py-2 text-center">Acciones</th>
+                      <th class="px-1 py-2 text-white">Código</th>
+                      <th class="px-1 py-2 text-white">Nombre</th>
+                      <th class="px-1 py-2 text-white">Tipo</th>
+                      <th class="px-1 py-2 text-white">Facilitador</th>
+                      <th class="px-1 py-2 text-white">Fecha Inicio</th>
+                      <th class="px-1 py-2 text-center text-white">Estado</th>
+                      <th class="px-1 py-2 text-center text-white">Asist.</th>
+                      <th class="px-1 py-2 text-center text-white">Encuestas</th>
+                      <th class="px-1 py-2 text-center text-white">Acciones</th>
                     </tr>
                   </thead>
                   <tbody>

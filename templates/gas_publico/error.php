@@ -1,105 +1,122 @@
 <?php
 /**
  * templates/gas_publico/error.php
- * Página de errores controlados del módulo GAS.
- * Se incluye desde index.php, procesar.php, etc.
+ * Pantalla de errores controlados del módulo GAS.
  * Variable requerida: $error_tipo (string)
  */
+if (session_status() === PHP_SESSION_NONE) session_start();
+require_once __DIR__ . '/../../iniciador.php';
 
-$mensajes = [
+$configs = [
     'token_invalido' => [
-        'titulo'  => 'Link Inválido',
-        'icono'   => '🔗',
-        'msg'     => 'El link que usaste no es válido o ha expirado. Verifica el link que te compartieron.',
-        'color'   => '#dc3545',
+        'icon'  => 'fas fa-unlink',
+        'color' => '#dc3545',
+        'grad'  => 'linear-gradient(135deg, #721c24, #dc3545)',
+        'titulo'=> 'Link Inválido',
+        'msg'   => 'El link que usaste no es válido o ha expirado. Verifica el link que te compartieron e intenta de nuevo.',
     ],
     'sesion_cerrada' => [
-        'titulo'  => 'Sesión Cerrada',
-        'icono'   => '🔒',
-        'msg'     => 'Esta sesión ya fue cerrada y no acepta más registros.',
-        'color'   => '#343a40',
+        'icon'  => 'fas fa-lock',
+        'color' => '#343a40',
+        'grad'  => 'linear-gradient(135deg, #1a1a2e, #343a40)',
+        'titulo'=> 'Sesión Cerrada',
+        'msg'   => 'Esta sesión ya fue cerrada y no acepta más registros ni encuestas.',
     ],
     'sesion_anulada' => [
-        'titulo'  => 'Sesión Anulada',
-        'icono'   => '🚫',
-        'msg'     => 'Esta sesión fue anulada. Por favor contacta al organizador para más información.',
-        'color'   => '#dc3545',
+        'icon'  => 'fas fa-ban',
+        'color' => '#dc3545',
+        'grad'  => 'linear-gradient(135deg, #721c24, #c0392b)',
+        'titulo'=> 'Sesión Anulada',
+        'msg'   => 'Esta sesión fue anulada por el organizador. Por favor contacta al organizador para más información.',
     ],
     'sesion_no_disponible' => [
-        'titulo'  => 'Sesión No Disponible',
-        'icono'   => '⏳',
-        'msg'     => 'Esta sesión aún no está activa o ya no está disponible para registros.',
-        'color'   => '#6c757d',
+        'icon'  => 'fas fa-hourglass-half',
+        'color' => '#6c757d',
+        'grad'  => 'linear-gradient(135deg, #495057, #6c757d)',
+        'titulo'=> 'Sesión No Disponible',
+        'msg'   => 'Esta sesión aún no está activa o no está disponible en este momento. Intenta más tarde o contacta al organizador.',
     ],
     'asistencia_duplicada' => [
-        'titulo'  => 'Ya Estás Registrado',
-        'icono'   => '✅',
-        'msg'     => 'Tu documento ya fue registrado en esta sesión. No es posible registrar asistencia dos veces.',
-        'color'   => '#0d6efd',
+        'icon'  => 'fas fa-user-check',
+        'color' => '#0d6efd',
+        'grad'  => 'linear-gradient(135deg, #084298, #0d6efd)',
+        'titulo'=> 'Ya Estás Registrado',
+        'msg'   => 'Tu documento ya fue registrado en esta sesión. No es posible registrar asistencia dos veces.',
     ],
     'no_registrado' => [
-        'titulo'  => 'Asistencia No Encontrada',
-        'icono'   => '❓',
-        'msg'     => 'No encontramos un registro de asistencia con tu documento para esta sesión. Asegúrate de haber registrado tu asistencia previamente.',
-        'color'   => '#fd7e14',
+        'icon'  => 'fas fa-user-times',
+        'color' => '#fd7e14',
+        'grad'  => 'linear-gradient(135deg, #7d3701, #fd7e14)',
+        'titulo'=> 'Asistencia No Encontrada',
+        'msg'   => 'No encontramos un registro de asistencia con tu documento para esta sesión. Asegúrate de haber registrado tu asistencia previamente.',
     ],
     'encuesta_duplicada' => [
-        'titulo'  => 'Encuesta Ya Respondida',
-        'icono'   => '📋',
-        'msg'     => 'Ya respondiste la encuesta de satisfacción para esta sesión. Solo se permite una respuesta por asistente.',
-        'color'   => '#6f42c1',
-    ],
-    'calificacion_invalida' => [
-        'titulo'  => 'Calificación Inválida',
-        'icono'   => '⚠️',
-        'msg'     => 'Una o más calificaciones están fuera del rango permitido (1-5). Por favor intenta de nuevo.',
-        'color'   => '#ffc107',
+        'icon'  => 'fas fa-clipboard-check',
+        'color' => '#6f42c1',
+        'grad'  => 'linear-gradient(135deg, #3b0764, #6f42c1)',
+        'titulo'=> 'Encuesta Ya Respondida',
+        'msg'   => 'Ya respondiste la encuesta de satisfacción para esta sesión. Solo se permite una respuesta por asistente.',
     ],
     'error_generico' => [
-        'titulo'  => 'Error Inesperado',
-        'icono'   => '⚙️',
-        'msg'     => 'Ocurrió un error al procesar tu solicitud. Por favor intenta de nuevo más tarde.',
-        'color'   => '#6c757d',
+        'icon'  => 'fas fa-exclamation-circle',
+        'color' => '#6c757d',
+        'grad'  => 'linear-gradient(135deg, #495057, #6c757d)',
+        'titulo'=> 'Error Inesperado',
+        'msg'   => 'Ocurrió un error al procesar tu solicitud. Por favor intenta de nuevo más tarde.',
     ],
 ];
 
 $tipo = $error_tipo ?? 'error_generico';
-$info = $mensajes[$tipo] ?? $mensajes['error_generico'];
+$cfg  = $configs[$tipo] ?? $configs['error_generico'];
 ?>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="<?php echo LANG; ?>">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?= htmlspecialchars($info['titulo']) ?></title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <?php require_once(ROOT.'includes/_head.php'); ?>
+  <title><?= htmlspecialchars($cfg['titulo']) ?></title>
   <style>
-    body { background: #f0f4f8; display: flex; align-items: center; min-height: 100vh; font-family: 'Segoe UI', sans-serif; }
-    .gas-card { max-width: 520px; margin: auto; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,.12); }
-    .gas-header { padding: 40px 32px; text-align: center; color: white; }
-    .gas-body { background: white; padding: 32px; text-align: center; }
-    .gas-footer { background: #f8f9fa; padding: 12px 32px; font-size: .8rem; color: #888; text-align: center; }
+    body { background:#f4f6fb; }
+    .gas-pub-wrapper { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px 16px; }
+    .gas-pub-card { width:100%; max-width:500px; border-radius:8px; overflow:hidden; box-shadow:0 4px 24px rgba(0,0,0,.10); background:#fff; }
+    .gas-err-header { padding:36px 28px; text-align:center; color:#fff; background: <?= $cfg['grad'] ?>; }
+    .gas-err-header .gas-icon { font-size:3rem; margin-bottom:14px; opacity:.95; }
+    .gas-err-header h4 { font-size:1.2rem; font-weight:700; margin:0; }
+    .gas-err-body  { padding:28px; text-align:center; }
+    .gas-err-body p { font-size:13px; color:#555; line-height:1.6; }
+    .gas-err-footer{ background:#f8f9fa; border-top:1px solid #eee; padding:10px 28px; font-size:11px; color:#aaa; text-align:center; }
+    .btn-gas-secondary { background:#f0f4f8; color:#1a3c6b; border:1px solid #d0dce8; border-radius:5px; padding:8px 22px; font-size:12px; font-weight:600; cursor:pointer; text-decoration:none; display:inline-block; transition:background .15s; margin-top:4px; }
+    .btn-gas-secondary:hover { background:#dde6f0; color:#1a3c6b; }
   </style>
 </head>
 <body>
-<div class="container">
-  <div class="gas-card">
-    <div class="gas-header" style="background: <?= htmlspecialchars($info['color']) ?>;">
-      <div style="font-size: 3rem; margin-bottom: 12px;"><?= $info['icono'] ?></div>
-      <h4><?= htmlspecialchars($info['titulo']) ?></h4>
+<div class="gas-pub-wrapper">
+  <div class="gas-pub-card">
+
+    <div class="gas-err-header">
+      <div class="gas-icon"><i class="<?= $cfg['icon'] ?>"></i></div>
+      <h4><?= htmlspecialchars($cfg['titulo']) ?></h4>
     </div>
-    <div class="gas-body">
-      <p class="text-muted"><?= htmlspecialchars($info['msg']) ?></p>
-      <p class="mt-4">
-        <a href="javascript:history.back()" class="btn btn-outline-secondary btn-sm me-2">
-          ← Regresar
+
+    <div class="gas-err-body">
+      <p><?= htmlspecialchars($cfg['msg']) ?></p>
+      <div class="d-flex justify-content-center gap-2 mt-3">
+        <a href="javascript:history.back()" class="btn-gas-secondary">
+          <i class="fas fa-arrow-left me-1"></i>Regresar
         </a>
-        <a href="javascript:window.close()" class="btn btn-outline-secondary btn-sm">
-          Cerrar
+        <a href="javascript:window.close()" class="btn-gas-secondary">
+          <i class="fas fa-times me-1"></i>Cerrar
         </a>
-      </p>
+      </div>
     </div>
-    <div class="gas-footer">Si necesitas ayuda, contacta al organizador de la sesión.</div>
+
+    <div class="gas-err-footer">
+      <i class="fas fa-headset me-1"></i>
+      Si necesitas ayuda, contacta al organizador de la sesión.
+    </div>
+  </div>
+
+  <div class="mt-3 text-center">
+    <img src="<?= LOGO_CLIENTE ?>" alt="logo" style="height:28px; opacity:.6;">
   </div>
 </div>
 </body>

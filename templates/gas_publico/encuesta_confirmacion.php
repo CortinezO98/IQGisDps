@@ -3,46 +3,76 @@
  * templates/gas_publico/encuesta_confirmacion.php
  */
 if (session_status() === PHP_SESSION_NONE) session_start();
+require_once __DIR__ . '/../../iniciador.php';
+
 $nombre   = htmlspecialchars($_SESSION['gas_enc_nombre']   ?? 'Asistente');
-$promedio = number_format((float)($_SESSION['gas_enc_promedio'] ?? 0), 1);
+$promedio = (float)($_SESSION['gas_enc_promedio'] ?? 0);
 unset($_SESSION['gas_enc_nombre'], $_SESSION['gas_enc_promedio']);
+$estrellas_llenas = round($promedio);
 ?>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="<?php echo LANG; ?>">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <?php require_once(ROOT.'includes/_head.php'); ?>
   <title>¡Encuesta Enviada!</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <style>
-    body { background: #f0f4f8; display: flex; align-items: center; min-height: 100vh; font-family: 'Segoe UI', sans-serif; }
-    .gas-card { max-width: 540px; margin: auto; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,.12); }
-    .gas-ok { background: linear-gradient(135deg, #6f42c1, #0d6efd); color: white; padding: 40px 32px; text-align: center; }
-    .gas-body { background: white; padding: 32px; text-align: center; }
-    .gas-footer { background: #f8f9fa; padding: 12px 32px; font-size: .8rem; color: #888; text-align: center; }
-    .stars { font-size: 2rem; letter-spacing: 4px; }
+    body { background:#f4f6fb; }
+    .gas-pub-wrapper { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px 16px; }
+    .gas-pub-card { width:100%; max-width:500px; border-radius:8px; overflow:hidden; box-shadow:0 4px 24px rgba(0,0,0,.10); background:#fff; }
+    .gas-ok-header { background:linear-gradient(135deg, #4a1a8c, #2e75b6); color:#fff; padding:32px 28px; text-align:center; }
+    .gas-ok-header .gas-icon { font-size:3rem; margin-bottom:12px; }
+    .gas-ok-header h4 { font-size:1.2rem; font-weight:700; margin:0 0 4px; }
+    .gas-ok-header p  { font-size:13px; opacity:.85; margin:0; }
+    .gas-pub-body  { padding:28px; text-align:center; }
+    .gas-pub-footer{ background:#f8f9fa; border-top:1px solid #eee; padding:10px 28px; font-size:11px; color:#aaa; text-align:center; }
+    .gas-score { margin:16px 0 8px; }
+    .gas-score .num { font-size:3.2rem; font-weight:800; color:#1a3c6b; line-height:1; }
+    .gas-score .den { font-size:1rem; color:#aaa; font-weight:400; }
+    .gas-stars { font-size:1.6rem; letter-spacing:4px; margin:6px 0 16px; }
+    .gas-star-on  { color:#ffc107; }
+    .gas-star-off { color:#dee2e6; }
+    .gas-thanks { font-size:13px; color:#666; }
   </style>
 </head>
 <body>
-<div class="container">
-  <div class="gas-card">
-    <div class="gas-ok">
-      <div style="font-size:3.5rem; margin-bottom:12px;">🎉</div>
+<div class="gas-pub-wrapper">
+  <div class="gas-pub-card">
+
+    <div class="gas-ok-header">
+      <div class="gas-icon"><i class="fas fa-award"></i></div>
       <h4>¡Gracias por tu Evaluación!</h4>
-      <p class="mb-0 opacity-75">Tu encuesta ha sido registrada exitosamente.</p>
+      <p>Tu encuesta de satisfacción fue registrada correctamente.</p>
     </div>
-    <div class="gas-body">
-      <p class="lead">Hola, <strong><?= $nombre ?></strong></p>
-      <p class="text-muted">Tu calificación promedio de esta sesión fue:</p>
-      <div class="display-4 fw-bold text-primary mb-2"><?= $promedio ?><small class="fs-5 text-muted">/5</small></div>
-      <div class="stars">
+
+    <div class="gas-pub-body">
+      <p style="font-size:14px; color:#333; margin-bottom:8px;">
+        Hola, <strong><?= $nombre ?></strong>.
+      </p>
+
+      <div class="gas-score">
+        <span class="num"><?= number_format($promedio, 1) ?></span>
+        <span class="den"> / 5</span>
+      </div>
+
+      <div class="gas-stars">
         <?php for ($i = 1; $i <= 5; $i++): ?>
-          <span style="color:<?= $i <= round((float)$promedio) ? '#ffc107' : '#dee2e6' ?>">★</span>
+          <i class="fas fa-star <?= $i <= $estrellas_llenas ? 'gas-star-on' : 'gas-star-off' ?>"></i>
         <?php endfor; ?>
       </div>
-      <p class="text-muted mt-3 small">Tu opinión contribuye a mejorar la calidad de nuestras sesiones. ¡Gracias por participar!</p>
+
+      <p class="gas-thanks">
+        Tu calificación contribuye a mejorar la calidad de nuestras sesiones.
+        ¡Gracias por participar!
+      </p>
     </div>
-    <div class="gas-footer">Puedes cerrar esta ventana.</div>
+
+    <div class="gas-pub-footer">
+      <i class="fas fa-shield-alt me-1"></i>Tu información es tratada de forma confidencial.
+    </div>
+  </div>
+
+  <div class="mt-3 text-center">
+    <img src="<?= LOGO_CLIENTE ?>" alt="logo" style="height:28px; opacity:.6;">
   </div>
 </div>
 </body>
