@@ -1,18 +1,20 @@
 <?php
 /**
- * templates/gestion_asistencias/exportar_csv.php
- * Exportación a CSV de asistentes o encuestas de una sesión.
+ * templates/gestion_asistencias/exportar_csv.php — CORREGIDO para DPS
  */
 
-require_once __DIR__ . '/../../iniciador.php';
-require_once __DIR__ . '/includes/gas_permisos.php';
-require_once __DIR__ . '/includes/gas_funciones.php';
+$modulo_plataforma = "Gestión Asistencias";
+require_once("../../iniciador.php");
+require_once(__DIR__ . '/includes/gas_funciones.php');
+require_once(__DIR__ . '/includes/gas_permisos.php');
 
 $id   = (int)($_GET['id']   ?? 0);
 $tipo = gas_sanitizar($_GET['tipo'] ?? 'asistentes');
 if ($id <= 0) { header('Location: index.php'); exit; }
 
-$stmt = $conn->prepare('SELECT gas_codigo, gas_nombre FROM gestion_asistencias_sesiones WHERE gas_id = ? LIMIT 1');
+$stmt = $enlace_db->prepare(
+    'SELECT gas_codigo, gas_nombre FROM gestion_asistencias_sesiones WHERE gas_id = ? LIMIT 1'
+);
 $stmt->bind_param('i', $id);
 $stmt->execute();
 $sesion = $stmt->get_result()->fetch_assoc();
@@ -24,9 +26,10 @@ $filename = 'GAS_' . $sesion['gas_codigo'] . '_' . $tipo . '_' . date('Ymd') . '
 header('Content-Type: text/csv; charset=utf-8');
 header('Content-Disposition: attachment; filename="' . $filename . '"');
 header('Pragma: no-cache');
+header('Expires: 0');
 
 $out = fopen('php://output', 'w');
-// BOM para que Excel abra correctamente con tildes
+// BOM para Excel con tildes
 fputs($out, "\xEF\xBB\xBF");
 
 if ($tipo === 'asistentes') {
@@ -36,14 +39,14 @@ if ($tipo === 'asistentes') {
         'Fecha Asistencia','Encuesta Respondida','Promedio Encuesta'
     ], ';');
 
-    $stmt = $conn->prepare(
-        'SELECT r.*,
-                CASE WHEN e.gae_id IS NOT NULL THEN \'Sí\' ELSE \'No\' END AS encuesta_respondida,
+    $stmt = $enlace_db->prepare(
+        "SELECT r.*,
+                CASE WHEN e.gae_id IS NOT NULL THEN 'Sí' ELSE 'No' END AS encuesta_respondida,
                 e.gae_calificacion_promedio
          FROM gestion_asistencias_registros r
          LEFT JOIN gestion_asistencias_encuestas e ON e.gae_asistencia_id = r.gar_id
-         WHERE r.gar_sesion_id = ? AND r.gar_estado = \'activo\'
-         ORDER BY r.gar_fecha_asistencia ASC'
+         WHERE r.gar_sesion_id = ? AND r.gar_estado = 'activo'
+         ORDER BY r.gar_fecha_asistencia ASC"
     );
     $stmt->bind_param('i', $id);
     $stmt->execute();
@@ -58,9 +61,9 @@ if ($tipo === 'asistentes') {
             $r['gar_nombres'],
             $r['gar_apellidos'],
             $r['gar_correo'],
-            $r['gar_celular'] ?? '',
-            $r['gar_entidad'] ?? '',
-            $r['gar_cargo'] ?? '',
+            $r['gar_celular']   ?? '',
+            $r['gar_entidad']   ?? '',
+            $r['gar_cargo']     ?? '',
             $r['gar_fecha_asistencia'],
             $r['encuesta_respondida'],
             $r['gae_calificacion_promedio'] ?? '',
@@ -75,12 +78,12 @@ if ($tipo === 'asistentes') {
         'Observaciones','Fecha Respuesta'
     ], ';');
 
-    $stmt = $conn->prepare(
-        'SELECT e.*, r.gar_numero_documento, r.gar_nombres, r.gar_apellidos, r.gar_entidad
+    $stmt = $enlace_db->prepare(
+        "SELECT e.*, r.gar_numero_documento, r.gar_nombres, r.gar_apellidos, r.gar_entidad
          FROM gestion_asistencias_encuestas e
          INNER JOIN gestion_asistencias_registros r ON r.gar_id = e.gae_asistencia_id
-         WHERE e.gae_sesion_id = ? AND e.gae_estado = \'activo\'
-         ORDER BY e.gae_fecha_respuesta ASC'
+         WHERE e.gae_sesion_id = ? AND e.gae_estado = 'activo'
+         ORDER BY e.gae_fecha_respuesta ASC"
     );
     $stmt->bind_param('i', $id);
     $stmt->execute();

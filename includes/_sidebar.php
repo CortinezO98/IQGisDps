@@ -301,35 +301,37 @@
 
         <div class="collapse" id="gestion-asistencias">
           <ul class="nav flex-column sub-menu">
+
             <li class="nav-item">
-              <a class="nav-link" href="<?php echo URL_MENU; ?>/gestion_asistencias/index">
+              <a class="nav-link" href="<?php echo URL_MENU; ?>/gestion_asistencias/index.php">
                 Sesiones
               </a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="<?php echo URL_MENU; ?>/gestion_asistencias/sesion_crear">
+              <a class="nav-link" href="<?php echo URL_MENU; ?>/gestion_asistencias/sesion_crear.php">
                 Crear sesión
               </a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="<?php echo URL_MENU; ?>/gestion_asistencias/reportes">
+              <a class="nav-link" href="<?php echo URL_MENU; ?>/gestion_asistencias/reportes.php">
                 Reportes
               </a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="<?php echo URL_MENU; ?>/gestion_asistencias/asistentes_lista">
+              <a class="nav-link" href="<?php echo URL_MENU; ?>/gestion_asistencias/asistentes_lista.php">
                 Asistentes
               </a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="<?php echo URL_MENU; ?>/gestion_asistencias/encuestas_lista">
+              <a class="nav-link" href="<?php echo URL_MENU; ?>/gestion_asistencias/encuestas_lista.php">
                 Encuestas
               </a>
             </li>
+
           </ul>
         </div>
       </li>

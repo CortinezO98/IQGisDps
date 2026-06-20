@@ -1,20 +1,17 @@
 <?php
 /**
- * gas_funciones.php
- * Funciones auxiliares reutilizables del módulo GAS.
- * No hace echo, no incluye HTML, no tiene lógica de negocio directa.
+ * gas_funciones.php — CORREGIDO para DPS
  *
- * UBICACIÓN en DPS: templates/gestion_asistencias/includes/gas_funciones.php
+ * CAMBIOS vs versión original:
+ *  1. Eliminado el bloque "if (!defined('GAS_BASE_URL')) require gas_config.php"
+ *     → Las constantes GAS_BASE_URL / GAS_PUBLIC_URL las define config.php de DPS
+ *  2. gas_generar_codigo() ahora recibe $enlace_db en lugar de $conn
+ *     → DPS usa $enlace_db como nombre de la conexión MySQLi
+ *  3. gas_generar_qr() ajusta ruta al QR relativa a la raíz del proyecto DPS
  */
-
-// Cargar config si no viene del iniciador DPS
-if (!defined('GAS_BASE_URL')) {
-    require_once __DIR__ . '/../../../gas_config.php';
-}
 
 /**
  * Genera un token público seguro de 64 caracteres hexadecimales.
- * Usa random_bytes() — disponible en PHP 7+.
  */
 function gas_generar_token(): string {
     return bin2hex(random_bytes(32));
@@ -22,13 +19,13 @@ function gas_generar_token(): string {
 
 /**
  * Genera el código legible de la sesión: SES-YYYY-NNN
- * Ejemplo: SES-2026-001
+ * IMPORTANTE: usa $enlace_db (nombre real en DPS, no $conn)
  *
- * @param mysqli $conn Conexión activa a la BD
+ * @param mysqli $enlace_db Conexión activa a la BD (variable de DPS)
  */
-function gas_generar_codigo(mysqli $conn): string {
+function gas_generar_codigo(mysqli $enlace_db): string {
     $year = (int)date('Y');
-    $stmt = $conn->prepare(
+    $stmt = $enlace_db->prepare(
         'SELECT COUNT(*) FROM gestion_asistencias_sesiones
          WHERE YEAR(gas_registro_fecha) = ?'
     );
@@ -41,7 +38,7 @@ function gas_generar_codigo(mysqli $conn): string {
 }
 
 /**
- * Obtiene la IP real del cliente, considerando proxies y CDN.
+ * Obtiene la IP real del cliente.
  */
 function gas_obtener_ip(): string {
     $headers = [
@@ -64,8 +61,9 @@ function gas_obtener_ip(): string {
 
 /**
  * Sanitiza un string de entrada para evitar XSS.
- * Los prepared statements ya evitan SQL injection.
- * Esta función es una capa adicional de higiene visual.
+ * NOTA: validar_input() de DPS usa htmlspecialchars y corrompe IDs numéricos.
+ *       Para campos de texto libre usa esta función.
+ *       Para IDs numéricos usa siempre (int).
  *
  * @param string $valor
  * @param int    $maxLen Longitud máxima (0 = sin límite)
@@ -86,28 +84,28 @@ function gas_calcular_promedio(int $t, int $f, int $m, int $ma, int $g): float {
 }
 
 /**
- * Genera y guarda la imagen QR de la sesión usando la librería phpqrcode.
- * Si la librería no está disponible, retorna cadena vacía (no bloquea el flujo).
+ * Genera y guarda la imagen QR de la sesión usando phpqrcode.
+ * Si la librería no está disponible, retorna '' (no bloquea el flujo).
  *
  * @param string $link  URL pública completa de la sesión
- * @param string $token Token de la sesión (usado como nombre de archivo)
- * @return string Ruta relativa al QR generado, o '' si no se pudo generar
+ * @param string $token Token de la sesión (nombre del archivo)
+ * @return string Ruta relativa al QR generado, o '' si no disponible
  */
 function gas_generar_qr(string $link, string $token): string {
+    // Ruta desde templates/gestion_asistencias/includes/ → raíz del proyecto
     $qrlib = __DIR__ . '/../../../app/functions/phpqrcode/qrlib.php';
     if (!file_exists($qrlib)) {
         return '';
     }
     require_once $qrlib;
 
-    // Directorio de QRs — relativo a la raíz del proyecto
-    $dir = __DIR__ . '/../../../assets/gas/qr/';
+    // Carpeta QR en templates/assets/gas/qr/
+    $dir = __DIR__ . '/../../assets/gas/qr/';
     if (!is_dir($dir)) {
         mkdir($dir, 0755, true);
     }
 
     $archivo = $dir . $token . '.png';
-    // Parámetros: texto, archivo, nivel de corrección, tamaño pixel, margen
     QRcode::png($link, $archivo, QR_ECLEVEL_M, 8, 2);
 
     return 'assets/gas/qr/' . $token . '.png';
@@ -115,9 +113,7 @@ function gas_generar_qr(string $link, string $token): string {
 
 /**
  * Construye el link público completo para una sesión.
- *
- * @param string $token Token de la sesión
- * @return string URL completa
+ * Usa GAS_PUBLIC_URL definida en config.php de DPS.
  */
 function gas_construir_link(string $token): string {
     return GAS_PUBLIC_URL . '?t=' . urlencode($token);
@@ -125,12 +121,6 @@ function gas_construir_link(string $token): string {
 
 /**
  * Valida que una transición de estado sea legal.
- * Estados: borrador → activa → finalizada → cerrada
- *          borrador|activa → anulada
- *
- * @param string $estadoActual
- * @param string $estadoNuevo
- * @return bool
  */
 function gas_validar_transicion(string $estadoActual, string $estadoNuevo): bool {
     $transiciones = [
@@ -144,7 +134,7 @@ function gas_validar_transicion(string $estadoActual, string $estadoNuevo): bool
 }
 
 /**
- * Retorna la clase CSS Bootstrap correspondiente a cada estado.
+ * Retorna la clase CSS Bootstrap para el badge de cada estado.
  */
 function gas_badge_estado(string $estado): string {
     $badges = [
@@ -169,4 +159,23 @@ function gas_label_estado(string $estado): string {
         'anulada'    => 'Anulada',
     ];
     return $labels[$estado] ?? $estado;
+}
+
+/**
+ * Retorna los tipos de sesión disponibles.
+ * Si GAS_TIPOS_SESION está definido en config.php de DPS, usa ese.
+ * Si no, usa el array por defecto.
+ */
+function gas_tipos_sesion(): array {
+    if (defined('GAS_TIPOS_SESION')) {
+        return GAS_TIPOS_SESION;
+    }
+    return [
+        'Formacion'       => 'Formación y Capacitación',
+        'Sensibilizacion' => 'Sensibilización',
+        'Seguimiento'     => 'Seguimiento y Retroalimentación',
+        'Informativo'     => 'Informativo',
+        'Induccion'       => 'Inducción',
+        'Otro'            => 'Otro',
+    ];
 }

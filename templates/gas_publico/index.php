@@ -1,23 +1,28 @@
 <?php
 /**
  * templates/gas_publico/index.php
- * ─────────────────────────────────────────────────────────
+ * ─────────────────────────────────────────────────────────────────────────
  * ENRUTADOR PÚBLICO del módulo GAS.
- * Este es el único archivo al que acceden los asistentes.
- * URL de acceso: http://localhost/iqgisdps/templates/gas_publico/index.php?t=TOKEN
+ * Acceso: http://127.0.0.1/IQGisDps/templates/gas_publico/index.php?t=TOKEN
  *
- * NO requiere sesión DPS. Es completamente público.
- * ─────────────────────────────────────────────────────────
+ * NO requiere sesión de usuario DPS.
+ * Usa iniciador.php SOLO para obtener $enlace_db con las credenciales
+ * correctas de config.php — sin validación de sesión de usuario.
+ * ─────────────────────────────────────────────────────────────────────────
  */
 
-// Iniciar sesión PHP para pasar el gar_id entre procesar y confirmación
-if (session_status() === PHP_SESSION_NONE) session_start();
+// Sesión propia del módulo público (para pasar gar_id entre páginas)
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-// Cargar configuración (conexión BD y constantes)
-require_once __DIR__ . '/../../gas_config.php';
-$conn = gas_conectar_bd();
+// ── Cargar config y conexión BD usando el mismo iniciador.php de DPS ────
+// iniciador.php → config.php (define constantes) + security_index.php
+//               → functions.php (define funciones) + db.php (crea $enlace_db)
+// NO llama security.php ni valida sesión de usuario → seguro para vistas públicas
+require_once __DIR__ . '/../../iniciador.php';
 
-// Funciones auxiliares
+// Funciones del módulo GAS
 require_once __DIR__ . '/../gestion_asistencias/includes/gas_funciones.php';
 
 // ── Leer y validar el token ──────────────────────────────────────────────
@@ -29,8 +34,8 @@ if (empty($token) || !preg_match('/^[a-f0-9]{64}$/', $token)) {
     exit;
 }
 
-// ── Buscar sesión por token ──────────────────────────────────────────────
-$stmt = $conn->prepare(
+// ── Buscar sesión por token — usa $enlace_db (variable de DPS) ──────────
+$stmt = $enlace_db->prepare(
     'SELECT gas_id, gas_nombre, gas_estado, gas_facilitador,
             gas_tipo_sesion, gas_fecha_inicio, gas_fecha_fin, gas_token_publico
      FROM gestion_asistencias_sesiones
@@ -48,7 +53,7 @@ if (!$sesion) {
     exit;
 }
 
-// ── Enrutar según estado ─────────────────────────────────────────────────
+// ── Enrutar según estado de la sesión ───────────────────────────────────
 switch ($sesion['gas_estado']) {
 
     case 'activa':
