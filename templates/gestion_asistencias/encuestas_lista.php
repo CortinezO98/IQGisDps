@@ -77,17 +77,17 @@ $stmt->close();
                 <table class="table table-hover table-bordered table-striped font-size-11 mb-0">
                   <thead>
                     <tr>
-                      <th class="px-1 py-2">#</th>
-                      <th class="px-1 py-2">Documento</th>
-                      <th class="px-1 py-2">Asistente</th>
-                      <th class="px-1 py-2 text-center" title="Dominio del Tema">Tema</th>
-                      <th class="px-1 py-2 text-center" title="Claridad Explicación">Facilit.</th>
-                      <th class="px-1 py-2 text-center" title="Metodología">Metod.</th>
-                      <th class="px-1 py-2 text-center" title="Material">Mat.</th>
-                      <th class="px-1 py-2 text-center" title="General">Gral.</th>
-                      <th class="px-1 py-2 text-center">Promedio</th>
-                      <th class="px-1 py-2">Observaciones</th>
-                      <th class="px-1 py-2">Fecha</th>
+                      <th class="px-1 py-2 text-white">#</th>
+                      <th class="px-1 py-2 text-white">Documento</th>
+                      <th class="px-1 py-2 text-white">Asistente</th>
+                      <th class="px-1 py-2 text-center text-white" title="Dominio del Tema">Tema</th>
+                      <th class="px-1 py-2 text-center text-white" title="Claridad Explicación">Facilit.</th>
+                      <th class="px-1 py-2 text-center text-white" title="Metodología">Metod.</th>
+                      <th class="px-1 py-2 text-center text-white" title="Material">Mat.</th>
+                      <th class="px-1 py-2 text-center text-white" title="General">Gral.</th>
+                      <th class="px-1 py-2 text-center text-white">Promedio</th>
+                      <th class="px-1 py-2 text-white">Observaciones</th>
+                      <th class="px-1 py-2 text-white">Fecha</th>
                     </tr>
                   </thead>
                   <tbody>

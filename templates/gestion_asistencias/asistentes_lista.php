@@ -80,16 +80,16 @@ $stmt->close();
                 <table class="table table-hover table-bordered table-striped font-size-11 mb-0">
                   <thead>
                     <tr>
-                      <th class="px-1 py-2">#</th>
-                      <th class="px-1 py-2">Tipo Doc.</th>
-                      <th class="px-1 py-2">Documento</th>
-                      <th class="px-1 py-2">Nombres</th>
-                      <th class="px-1 py-2">Correo</th>
-                      <th class="px-1 py-2">Celular</th>
-                      <th class="px-1 py-2">Entidad</th>
-                      <th class="px-1 py-2">Cargo</th>
-                      <th class="px-1 py-2">Fecha Registro</th>
-                      <th class="px-1 py-2 text-center">Encuesta</th>
+                      <th class="px-1 py-2 text-white">#</th>
+                      <th class="px-1 py-2 text-white">Tipo Doc.</th>
+                      <th class="px-1 py-2 text-white">Documento</th>
+                      <th class="px-1 py-2 text-white">Nombres</th>
+                      <th class="px-1 py-2 text-white">Correo</th>
+                      <th class="px-1 py-2 text-white">Celular</th>
+                      <th class="px-1 py-2 text-white">Entidad</th>
+                      <th class="px-1 py-2 text-white">Cargo</th>
+                      <th class="px-1 py-2 text-white">Fecha Registro</th>
+                      <th class="px-1 py-2 text-center text-white">Encuesta</th>
                     </tr>
                   </thead>
                   <tbody>
